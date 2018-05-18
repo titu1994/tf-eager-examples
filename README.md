@@ -14,7 +14,9 @@ A final note :
 
 # Table of Contents
 
-Provided are two links - The title link leads to the local Jupyter Notebook where as the Colab Link Leads to a Colaboratory notebook. Please ensure to copy the contents of the notebook and run the command `!pip install --upgrade tensorflow` at the top before any of the imports to ensure you are using the latest Tensorflow version
+Provided are two links - The title link leads to the local Jupyter Notebook where as the Colab Link Leads to a Colaboratory notebook. 
+
+**Please ensure to copy the contents of the notebook and run the command `!pip install --upgrade tensorflow` at the top before any of the imports to ensure you are using the latest Tensorflow version, unless it is already done for you !**
 
 **1. Basics**
   - [Linear Regression](https://github.com/titu1994/tf-eager-examples/blob/master/notebooks/01_linear_regression.ipynb) - [Colab](https://colab.research.google.com/github/titu1994/tf-eager-examples/blob/master/notebooks/01_linear_regression.ipynb#scrollTo=ds1j7EC2ugi_)
