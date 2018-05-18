@@ -41,5 +41,8 @@ Provided are two links - The title link leads to the local Jupyter Notebook wher
   - [**Models with Custom Variables**](https://github.com/titu1994/tf-eager-examples/blob/master/notebooks/10_custom_models.ipynb) - [Colab](https://colab.research.google.com/github/titu1994/tf-eager-examples/blob/master/notebooks/10_custom_models.ipynb)
   
   
-  
-  
+# Requirements
+- Tensorflow 1.8+
+- numpy
+- PIL / Pillow to generate images for VAE
+- matplotlib to display images for VAE
