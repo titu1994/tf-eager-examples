@@ -48,12 +48,6 @@ class RNN(tf.keras.Model):
         state = self.lstm_cell.zero_state(batch_size=inputs.shape[0], dtype=tf.float32)
         x = inputs
 
-        # if the LSTMCell is being called for the first time ever
-        # Build the cell's weights manually
-        if not self.lstm_cell.built:
-            self.lstm_cell._dtype = tf.float32  # important : force set the data type via its private variable
-            self.lstm_cell.build(inputs.shape[1:])
-
         for t in range(inputs.shape[1]):
             input = inputs[:, t, :]  # extract the current input at timestep t
             x, state = self.lstm_cell(input, state=state)  # get the output embedding and the states ; note `state` rather than `states`
