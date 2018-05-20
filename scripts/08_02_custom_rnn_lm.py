@@ -108,6 +108,12 @@ with tf.device(device):
 
             # get and clip gradients
             gradients = tape.gradient(loss, model.variables)
+
+            with tf.device('/cpu:0'):
+                gradients = [tf.cast(g, tf.float64) for g in gradients]  # necessary cast for kernel to exist
+                gradients, _ = tf.clip_by_global_norm(gradients, 5.0)
+                gradients = [tf.cast(g, tf.float32) for g in gradients]  # necessary cast to correct dtype of grads and vars
+
             grad_vars = zip(gradients, model.variables)
 
             # update weights
