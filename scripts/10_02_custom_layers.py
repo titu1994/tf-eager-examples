@@ -52,7 +52,7 @@ class CustomLayer(tf.keras.layers.Layer):
                                         initializer=tf.keras.initializers.he_normal())
 
         # Do NOT forget to call this line, otherwise multiple model variables will be built with the same name
-        # This cannot happen inside Keras layers, and therefore the model will not be Checkpointeable.
+        # This cannot happen inside Keras layers, and therefore the model will not be Checkpoint-able.
         # It also wont train properly.
         #
         self.built = True
