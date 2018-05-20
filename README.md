@@ -38,7 +38,7 @@ Provided are two links - The title link leads to the local Jupyter Notebook wher
   
 **3. Advanced**
   - [Variational Autoencoders](https://github.com/titu1994/tf-eager-examples/blob/master/notebooks/09_vae.ipynb) - [Colab](https://colab.research.google.com/github/titu1994/tf-eager-examples/blob/master/notebooks/09_vae.ipynb)
-  - [**Models with Custom Variables + Saving / Restoring + Manual Gradient Updates + Datasets API **](https://github.com/titu1994/tf-eager-examples/blob/master/notebooks/10_custom_models.ipynb) - [Colab](https://colab.research.google.com/github/titu1994/tf-eager-examples/blob/master/notebooks/10_custom_models.ipynb)
+  - [**Models with Custom Variables + Saving / Restoring + Manual Gradient Updates + Datasets API**](https://github.com/titu1994/tf-eager-examples/blob/master/notebooks/10_custom_models.ipynb) - [Colab](https://colab.research.google.com/github/titu1994/tf-eager-examples/blob/master/notebooks/10_custom_models.ipynb)
   - [**Models with Custom Layers**](https://github.com/titu1994/tf-eager-examples/blob/master/notebooks/10_02_custom_layers.ipynb) - [Colab](https://colab.research.google.com/github/titu1994/tf-eager-examples/blob/master/notebooks/10_02_custom_layers.ipynb)
   
   
