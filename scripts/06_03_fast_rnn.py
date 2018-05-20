@@ -41,22 +41,22 @@ class RNN(tf.keras.Model):
     def __init__(self, units, num_classes):
         super(RNN, self).__init__()
         self.units = units
-        self.impl = 1 if tfe.num_gpus() == 0 else 2  # Use GPU implementation for more speed if available
-        self.lstm_cell = tf.keras.layers.LSTMCell(units, implementation=self.impl)  # use a cell directly
+        self.lstm_cell = tf.nn.rnn_cell.LSTMCell(units)  # use the tensorflow cell directly
         self.classifier = tf.keras.layers.Dense(num_classes)
 
     def call(self, inputs, training=None, mask=None):
-        states = [tf.zeros((inputs.shape[0], self.units)) for _ in range(2)]  # 2 states of a LSTM
+        state = self.lstm_cell.zero_state(batch_size=inputs.shape[0], dtype=tf.float32)
+        x = inputs
 
         # if the LSTMCell is being called for the first time ever
         # Build the cell's weights manually
         if not self.lstm_cell.built:
-            self.lstm_cell.build(inputs.shape)
+            self.lstm_cell._dtype = tf.float32  # important : force set the data type via its private variable
+            self.lstm_cell.build(inputs.shape[1:])
 
-        x = inputs
         for t in range(inputs.shape[1]):
             input = inputs[:, t, :]  # extract the current input at timestep t
-            x, states = self.lstm_cell(input, states=states, training=training)  # get the output embedding and the states
+            x, state = self.lstm_cell(input, state=state)  # get the output embedding and the states ; note `state` rather than `states`
 
             # states = feed in the states back to the next timestep
 
@@ -79,8 +79,8 @@ with tf.device(device):
 
     # suggested fix ; can be incorporated inside `_eager_set_inputs` or `_set_input`
     # Fix = Use exactly one sample from the provided input dataset to determine input/output shape/s for the model
-    dummy_x = np.zeros((1, 28, 28))
-    model._set_inputs(dummy_x)
+    dummy_x = tf.zeros((1, 28, 28))
+    model.call(dummy_x)
 
     # train
     model.fit(x_train, y_train_ohe, batch_size=batch_size, epochs=epochs,

@@ -136,10 +136,6 @@ device = '/cpu:0' if tfe.num_gpus() == 0 else '/gpu:0'
 
 with tf.device(device):
 
-    """
-    NOT CURRENTLY WORKING
-    """
-
     # build model and optimizer
     model = ResNet([2, 2, 2], num_classes)
     model.compile(optimizer=tf.train.AdamOptimizer(0.001), loss='categorical_crossentropy',
@@ -147,8 +143,8 @@ with tf.device(device):
 
     # suggested fix ; can be incorporated inside `_eager_set_inputs` or `_set_input`
     # Fix = Use exactly one sample from the provided input dataset to determine input/output shape/s for the model
-    dummy_x = np.zeros((1, image_size, image_size, 1))
-    model._set_inputs(dummy_x)
+    dummy_x = tf.zeros((1, image_size, image_size, 1))
+    model.call(dummy_x)
 
     print("Number of variables in the model :", len(model.variables))
     model.summary()

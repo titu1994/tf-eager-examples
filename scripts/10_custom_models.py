@@ -79,9 +79,12 @@ with tf.device(device):
     # build model and optimizer
     model = CustomRegressor()
 
+    dummy_x = tf.zeros([1] + [x_train.shape[-1]])
+    model.call(dummy_x)
+
     # Can no longer use Keras utility functions since we could not register the variable to keras properly
     # Whenever TF allows the addition of variables using Keras APIs, this will become easier like before
-    optimizer = tf.train.AdamOptimizer(3.)
+    optimizer = tf.train.AdamOptimizer(1.0)
 
     # wrap with datasets to make life slightly easier
     train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
@@ -99,7 +102,6 @@ with tf.device(device):
         test_loss = tfe.metrics.Mean()
 
         for b, (x, y) in enumerate(train_dataset):
-            preds = model(x)
             loss, grads = gradients(model, x, y)
             optimizer.apply_gradients(grads, tf.train.get_or_create_global_step())
 
@@ -124,19 +126,22 @@ with tf.device(device):
     saver.save('weights/10_custom_models/weights.ckpt')
     print("Model saved")
 
+    # Here we need to reset the keras internal backend first
+    tf.keras.backend.clear_session()
+
     # Now we restore the model and predict again on test set
     model2 = CustomRegressor()
 
     # we need to run the model at least once to build all of the variables and the custom variables
-    # make sure to use model() instead of model.call(), otherwise it wont find the weights in the checkpoints properly
-    dummy_x = tf.zeros([1] + [x_train.shape[-1]])
-    model2(dummy_x)
+    # make sure to build the model the same way, otherwise it wont find the weights in the checkpoints properly
+    # safest option is to call model.call(tf_input_batch) explicitly
+    model2.call(dummy_x)
 
     # ensure that you are loading both the Keras variables AND the custom variables
     saver2 = tfe.Saver(model2.variables + list(model2.custom_variables.values()))
     saver2.restore('weights/10_custom_models/weights.ckpt')
     print("Weights restored")
-    tf.nn.softmax_cross_entropy_with_logits
+
     # evaluate the results
     iterator = test_dataset.make_one_shot_iterator()  # dont repeat any values from test set
     test_loss = tfe.metrics.Mean()
