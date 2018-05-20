@@ -123,7 +123,7 @@ with tf.device(device):
 
     # Make sure to add not just the "model" variables, but also the custom variables we added !
     saver = tfe.Saver(model.variables + list(model.custom_variables.values()))
-    saver.save('weights/10_custom_models/weights.ckpt')
+    saver.save('weights/10_01_custom_models/weights.ckpt')
     print("Model saved")
 
     # Here we need to reset the keras internal backend first
@@ -139,7 +139,7 @@ with tf.device(device):
 
     # ensure that you are loading both the Keras variables AND the custom variables
     saver2 = tfe.Saver(model2.variables + list(model2.custom_variables.values()))
-    saver2.restore('weights/10_custom_models/weights.ckpt')
+    saver2.restore('weights/10_01_custom_models/weights.ckpt')
     print("Weights restored")
 
     # evaluate the results
