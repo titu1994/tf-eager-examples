@@ -135,10 +135,7 @@ with tf.device(device):
     # suggested fix ; can be incorporated inside `_eager_set_inputs` or `_set_input`
     # Fix = Use exactly one sample from the provided input dataset to determine input/output shape/s for the model
     dummy_x = tf.zeros((1, image_size, image_size, 1))
-    model.call(dummy_x)
-
-    print("Number of variables in the model :", len(model.variables))
-    model.summary()
+    model._set_inputs(dummy_x)
 
     # train
     model.fit(x_train, y_train_ohe, batch_size=batch_size, epochs=epochs,

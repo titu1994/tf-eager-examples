@@ -43,7 +43,7 @@ Provided are two links - The title link leads to the local Jupyter Notebook wher
   
   
 # Requirements
-- Tensorflow 1.8+
+- Tensorflow 1.9
 - numpy
 - PIL / Pillow to generate images for VAE
 - matplotlib to display images for VAE

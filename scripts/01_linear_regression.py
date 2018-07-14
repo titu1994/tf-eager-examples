@@ -51,7 +51,7 @@ with tf.device(device):
     model = Regressor()
     model.compile(optimizer=tf.train.GradientDescentOptimizer(0.05), loss='mse')
 
-    # suggested fix for TF <= 1.9; can be incorporated inside `_eager_set_inputs` or `_set_input`
+    # suggested fix for TF <= 2.0; can be incorporated inside `_eager_set_inputs` or `_set_input`
     # Fix = Use exactly one sample from the provided input dataset to determine input/output shape/s for the model
     dummy_x = tf.zeros((1, 13))
     model.call(dummy_x)
